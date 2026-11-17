@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "BloodSugarRecord": {
+      "title": "BloodSugarRecord",
+      "description": "A blood sugar measurement logged by an authenticated user.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authenticated Firebase UID of the owner."
+        },
+        "valueMgDl": {
+          "type": "integer",
+          "description": "Blood sugar level in mg/dL (20..600)."
+        },
+        "timing": {
+          "type": "string",
+          "enum": ["FASTING", "BEFORE_MEAL", "AFTER_MEAL", "BEDTIME"],
+          "description": "Measurement timing context."
+        },
+        "measuredDate": {
+          "type": "string",
+          "description": "Measurement date in YYYY-MM-DD format."
+        },
+        "measuredTimeText": {
+          "type": "string",
+          "description": "Localized display time of measurement."
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional short memo (max 120 chars)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": [
+        "userId",
+        "valueMgDl",
+        "timing",
+        "measuredDate",
+        "measuredTimeText",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/bloodSugarRecords/{recordId}": {
+      "schema": { "$ref": "#/entities/BloodSugarRecord" },
+      "description": "Per-user blood sugar measurements stored under the owner's UID."
+    }
+  }
+}
